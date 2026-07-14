@@ -2,7 +2,7 @@ s=["a","b","ab","cab","cdab","cabdae"]
 
 
 def lsc_recur(words):
-    n=len(words)
+    n=len(words)    
     words.sort(key=len)
 
     def solve(ind,prev_ind):
@@ -62,5 +62,3 @@ print(lsc_memo(s))
 
 
 # tabulation
-
-
