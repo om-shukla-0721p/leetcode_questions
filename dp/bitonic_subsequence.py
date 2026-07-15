@@ -44,3 +44,9 @@ def mountain_memo(nums):
         return n-maxi
 
 print(mountain_memo(nums))
+
+
+def mountain_tabu(nums):
+    n=len(nums)
+
+    
