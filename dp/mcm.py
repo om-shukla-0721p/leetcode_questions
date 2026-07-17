@@ -1,0 +1,22 @@
+# matrix multiplication is associative for multiplication thats why we can 
+# go from in to out or out to in
+# but cost does change with differnt order
+
+arr=[1,2,3,4,3]
+
+#output=30
+
+def mcm_recur(arr):
+    n=len(arr)
+
+    def solve(i,j):
+        if i==j:
+            return 0
+        cost=float("inf")
+        for k in range(i,j):
+            cost=min(cost,solve(i,k)+solve(k+1,j)+arr[i-1]*arr[k]*arr[j])
+        return cost
+
+    return solve(1,n-1)
+
+print(mcm_recur(arr))
