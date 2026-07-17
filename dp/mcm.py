@@ -20,3 +20,29 @@ def mcm_recur(arr):
     return solve(1,n-1)
 
 print(mcm_recur(arr))
+
+
+# memoization
+
+def mcm_memo(arr):
+    n=len(arr)
+    dp=[[None for _ in range(n)] for __ in range(n)]
+
+    def solve(i,j):
+        if i==j:
+            return 0
+        if dp[i][j]!=None:
+            return dp[i][j]
+        cost=float("inf")
+        for k in range(i,j):
+            cost=min(cost,solve(i,k)+solve(k+1,j)+arr[i-1]*arr[k]*arr[j])
+        
+        dp[i][j]=cost
+        return dp[i][j]
+    
+    return solve(1,n-1)
+
+print(mcm_memo(arr))
+
+
+
