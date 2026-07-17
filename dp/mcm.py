@@ -45,4 +45,21 @@ def mcm_memo(arr):
 print(mcm_memo(arr))
 
 
+# tabulation
+
+def mcm_tabu(arr):
+    n=len(arr)
+    dp=[[0 for _ in range(n)] for _ in range(n)]
+
+    for i in range(n-1,0,-1):
+        for j in range(i+1,n):
+            cost=float("inf")
+            for k in range(i,j):
+                cost=min(cost,dp[i][k]+dp[k+1][j]+arr[i-1]*arr[k]*arr[j])
+            dp[i][j]=cost
+    return dp[1][n-1]
+
+print(mcm_tabu(arr))
+    
+
 
