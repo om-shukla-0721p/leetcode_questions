@@ -105,4 +105,20 @@ def min_cost_memo(n,cuts):
 
 print(min_cost_memo(n,cuts))
 
+
+def min_cost_tabu(n,cuts):
+    cuts=[0]+sorted(cuts)+[n]
+    dp=[[0 for _ in range(len(cuts))] for __ in range(len(cuts))]
+
+    for i in range(len(cuts)-1,-1,-1):
+        for j in range(i+2,len(cuts)):
+            cost=float("inf")
+            for k in range(i+1,j):
+                cost=min(cost,dp[i][k]+dp[k][j]+cuts[j]-cuts[i])
+            
+            dp[i][j]=cost
+    return dp[0][len(cuts)-1]
+
+
+print(min_cost_tabu(n,cuts))
     
