@@ -74,3 +74,73 @@ def cut_tabu(s):
     return dp[0][n-1]
 
 print(cut_tabu(s))
+
+
+# without only 1 variable but without precomputation of is_pal
+def cut_recur(s):
+    n=len(s)
+    def is_palindrome(l,r):
+        while l<r:
+            if s[l]!=s[r]:
+                return False
+            l+=1
+            r-=1
+        return True
+
+    def solve(i):
+        if i==n:
+            return -1
+        
+        cost=float("inf")
+        for j in range(i,n):
+            if is_palindrome(i,j) is True:
+                cost=min(cost,solve(j+1)+1)
+        return cost
+    return solve(0)
+    
+def cut_memo(s):
+    n=len(s)
+    dp=[None for __ in range(n)]
+
+    def is_palindrome(l,r):
+        while l<r:
+            if s[l]!=s[r]:
+                return False
+            l+=1
+            r-=1
+        return True
+    
+    def solve(i):
+        if i==n:
+            return -1
+        if dp[i]!=None:
+            return dp[i]
+        
+        cost=float("inf")
+        for j in range(i,n):
+            if is_palindrome(i,j):
+                cost=min(cost,solve(j+1)+1)
+        dp[i]=cost
+        return dp[i]
+    
+    return solve(0)
+
+def cut_tabu(s):
+    n=len(s)
+    dp=[-1 for _ in range(n+1)]
+
+    def is_palindrome(l,r):
+        while l<r:
+            if s[l]!=s[r]:
+                return False
+            l+=1
+            r-=1
+        return True
+
+    for i in range(n-1,-1,-1):
+        cost=float("inf")
+        for j in range(i,n):
+            if is_palindrome(i,j) is True:
+                cost=min(cost,dp[j+1]+1)
+        dp[i]=cost
+    return dp[0]
