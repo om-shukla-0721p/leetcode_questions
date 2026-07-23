@@ -77,7 +77,7 @@ print(cut_tabu(s))
 
 
 # without only 1 variable but without precomputation of is_pal
-def cut_recur(s):
+def cut_recur_better(s):
     n=len(s)
     def is_palindrome(l,r):
         while l<r:
@@ -97,8 +97,10 @@ def cut_recur(s):
                 cost=min(cost,solve(j+1)+1)
         return cost
     return solve(0)
+
+print(cut_recur_better(s))
     
-def cut_memo(s):
+def cut_memo_better(s):
     n=len(s)
     dp=[None for __ in range(n)]
 
@@ -125,7 +127,9 @@ def cut_memo(s):
     
     return solve(0)
 
-def cut_tabu(s):
+print(cut_memo_better(s))
+
+def cut_tabu_better(s):
     n=len(s)
     dp=[-1 for _ in range(n+1)]
 
@@ -144,3 +148,35 @@ def cut_tabu(s):
                 cost=min(cost,dp[j+1]+1)
         dp[i]=cost
     return dp[0]
+
+print(cut_tabu_better(s))
+
+def cut_best(s):
+    n=len(s)
+    is_palindorme=[[False for _ in range(n)] for __ in range(n)]
+    # loops for precomputing the palindrome pairs
+    for i in range(n-1,-1,-1):
+        for j in range(i,n):
+            if s[i]==s[j]:
+                if j-i<=2 or is_palindorme[i+1][j-1]==True:
+                    is_palindorme[i][j]=True
+
+    # making dp
+    dp=[0 for _ in range(n+1)]
+    dp[n]=-1 # base condition
+
+    # taking the best possible pair of palindormes possible
+    for i in range(n-1,-1,-1):
+        cost=float("inf")
+        for j in range(i,n):
+            if is_palindorme[i][j]==True:
+                cost=min(cost,dp[j+1]+1)
+        dp[i]=cost
+
+    return dp[0]
+
+
+print(cut_best(s))
+
+    
+
