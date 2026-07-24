@@ -56,3 +56,29 @@ def count_tabu(s):
     return total
 
 print(count_tabu(s))
+
+
+# expansion method
+
+def count_expansion(s):
+    n=len(s)
+    count=0
+
+    def expand(i,j):
+        c=0
+        while i>=0 and j<n :
+            if s[i]==s[j]:
+                c+=1
+                i-=1
+                j+=1
+            else:
+                break
+        return c
+
+    for i in range(n):
+        count+=expand(i,i)
+        count+=expand(i,i+1)
+
+    return count
+
+print(count_expansion(s))
